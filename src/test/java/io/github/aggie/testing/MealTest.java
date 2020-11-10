@@ -1,12 +1,16 @@
 package io.github.aggie.testing;
 
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
+import org.junit.jupiter.params.provider.ValueSource;
 
-//import static org.hamcrest.MatcherAssert.assertThat;
-//import static org.hamcrest.Matchers.*;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.*;
+
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.*;
 
 class MealTest {
 
@@ -66,5 +70,11 @@ class MealTest {
 
         //when + then
         assertThrows(IllegalArgumentException.class, () -> meal.getDiscountedPrice(18));
+    }
+
+    @ParameterizedTest
+    @ValueSource(ints = {5, 10, 15, 18})
+    void mealPricesShouldBeLowerThan20(int price) {
+        assertThat(price, lessThan(20));
     }
 }
