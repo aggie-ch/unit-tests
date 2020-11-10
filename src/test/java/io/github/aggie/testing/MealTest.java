@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test;
 //import static org.hamcrest.MatcherAssert.assertThat;
 //import static org.hamcrest.Matchers.*;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.*;
 
 class MealTest {
@@ -56,5 +57,14 @@ class MealTest {
         //then
         assertEquals(meal1, meal2, "Checking if two meals are equal");
         assertThat(meal1).isEqualTo(meal2);
+    }
+
+    @Test
+    void exceptionShouldBeThrownIfDiscountIsHigherThanThePrice() {
+        //given
+        Meal meal = new Meal(15, "Pasta");
+
+        //when + then
+        assertThrows(IllegalArgumentException.class, () -> meal.getDiscountedPrice(18));
     }
 }
