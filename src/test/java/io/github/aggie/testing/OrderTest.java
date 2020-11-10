@@ -1,5 +1,7 @@
 package io.github.aggie.testing;
 
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
@@ -10,10 +12,21 @@ import static org.hamcrest.Matchers.*;
 
 class OrderTest {
 
+    private Order order;
+
+    @BeforeEach
+    void initializeOrder() {
+        order = new Order();
+    }
+
+    @AfterEach
+    void cleanUp() {
+        order.cancel();
+    }
+
     @Test
     void mealListShouldBeEmptyAfterCreationOfOrder() {
         // given
-        Order order = new Order();
 
         // when
 
@@ -28,7 +41,6 @@ class OrderTest {
     void addingMealToOrderShouldIncreaseOrderSize() {
         // given
         Meal meal = new Meal(14, "Pizza");
-        Order order = new Order();
 
         // when
         order.addMealToOrder(meal);
@@ -44,7 +56,6 @@ class OrderTest {
     void removingMealFromOrderShouldDecreaseOrderSize() {
         // given
         Meal meal = new Meal(14, "Pizza");
-        Order order = new Order();
 
         // when
         order.addMealToOrder(meal);
@@ -60,7 +71,6 @@ class OrderTest {
         // given
         Meal meal1 = new Meal(24, "Chicken");
         Meal meal2 = new Meal(32, "Fish");
-        Order order = new Order();
 
         // when
         order.addMealToOrder(meal1);
