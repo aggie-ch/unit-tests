@@ -2,6 +2,7 @@ package io.github.aggie.testing;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
@@ -26,9 +27,7 @@ class OrderTest {
 
     @Test
     void mealListShouldBeEmptyAfterCreationOfOrder() {
-        // given
-
-        // when
+        // given + when
 
         // then
         assertThat(order.getMeals(), empty());
@@ -81,6 +80,7 @@ class OrderTest {
         assertThat(order.getMeals(), containsInAnyOrder(meal2, meal1));
     }
 
+    @Disabled
     @Test
     void testIfTwoListsAreTheSame() {
         // given
