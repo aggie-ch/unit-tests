@@ -11,7 +11,6 @@ class AccountTest {
 
     @Test
     void newlyCreatedAccountShouldNotBeActive() {
-
         //given + when
         Account newAccount = new Account();
 
@@ -24,7 +23,6 @@ class AccountTest {
 
     @Test
     void activatedAccountShouldHaveActiveFlagSet() {
-
         //given
         Account newAccount = new Account();
 
@@ -38,7 +36,6 @@ class AccountTest {
 
     @Test
     void newlyCreatedAccountShouldNotHaveDefaultDeliveryAddressSet() {
-
         //given
         Account account = new Account();
 
@@ -53,7 +50,6 @@ class AccountTest {
 
     @Test
     void defaultDeliveryAddressShouldNotBeNullAfterBeingSet() {
-
         //given
         Address address = new Address("5th Avenue", "717");
         Account account = new Account();

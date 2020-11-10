@@ -11,7 +11,6 @@ class MealTest {
 
     @Test
     void shouldReturnDiscountedPrice() {
-
         //given
         Meal meal = new Meal(27);
 
@@ -26,7 +25,6 @@ class MealTest {
 
     @Test
     void referencesToTheSameObjectShouldBeEqual() {
-
         //given + when
         Meal meal1 = new Meal(10);
         Meal meal2 = meal1;
@@ -39,7 +37,6 @@ class MealTest {
 
     @Test
     void referencesToDifferentObjectsShouldNotBeEqual() {
-
         //given + when
         Meal meal1 = new Meal(10);
         Meal meal2 = new Meal(20);
@@ -52,7 +49,6 @@ class MealTest {
 
     @Test
     void twoMealsShouldBeEqualWhenPriceAndNameAreTheSame() {
-
         //given + when
         Meal meal1 = new Meal(15, "Pasta");
         Meal meal2 = new Meal(15, "Pasta");
