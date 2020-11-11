@@ -1,6 +1,7 @@
 package io.github.aggie.testing;
 
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -104,5 +105,15 @@ class MealTest {
     private static Stream<String> createCakeNames() {
         List<String> cakeNames = Arrays.asList("Pie-cake", "Muffin-cake");
         return cakeNames.stream();
+    }
+
+    @ExtendWith(IllegalArgumentExceptionIgnoreExtension.class)
+    @ParameterizedTest
+    @ValueSource(ints = {2, 3, 4, 7})
+    void mealPricesShouldBeLowerThan12(int price) {
+        if(price > 4) {
+            throw new IllegalArgumentException();
+        }
+        assertThat(price, lessThan(12));
     }
 }
