@@ -1,9 +1,6 @@
 package io.github.aggie.testing;
 
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.extension.ExtendWith;
 
 import java.util.Arrays;
@@ -40,6 +37,7 @@ class OrderTest {
         assertThat(order.getMeals(), emptyCollectionOf(Meal.class));
     }
 
+    @Tag("Pizza")
     @Test
     void addingMealToOrderShouldIncreaseOrderSize() {
         // given
@@ -55,6 +53,7 @@ class OrderTest {
         assertThat(order.getMeals().get(0).getPrice(), equalTo(14));
     }
 
+    @Tag("Pizza")
     @Test
     void removingMealFromOrderShouldDecreaseOrderSize() {
         // given
