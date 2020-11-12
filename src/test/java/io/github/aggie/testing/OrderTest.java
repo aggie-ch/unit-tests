@@ -1,21 +1,35 @@
 package io.github.aggie.testing;
 
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.extension.ExtendWith;
 
 import java.util.Arrays;
 import java.util.List;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
+@ExtendWith(BeforeAfterExtension.class)
 class OrderTest {
+
+    private Order order;
+
+    @BeforeEach
+    void initializeOrder() {
+        System.out.println("Inside before each");
+        order = new Order();
+    }
+
+    @AfterEach
+    void cleanUp() {
+        System.out.println("Inside after each");
+        order.cancel();
+    }
 
     @Test
     void mealListShouldBeEmptyAfterCreationOfOrder() {
-        // given
-        Order order = new Order();
-
-        // when
+        // given + when
 
         // then
         assertThat(order.getMeals(), empty());
@@ -24,11 +38,11 @@ class OrderTest {
         assertThat(order.getMeals(), emptyCollectionOf(Meal.class));
     }
 
+    @Tag("Pizza")
     @Test
     void addingMealToOrderShouldIncreaseOrderSize() {
         // given
         Meal meal = new Meal(14, "Pizza");
-        Order order = new Order();
 
         // when
         order.addMealToOrder(meal);
@@ -40,11 +54,11 @@ class OrderTest {
         assertThat(order.getMeals().get(0).getPrice(), equalTo(14));
     }
 
+    @Tag("Pizza")
     @Test
     void removingMealFromOrderShouldDecreaseOrderSize() {
         // given
         Meal meal = new Meal(14, "Pizza");
-        Order order = new Order();
 
         // when
         order.addMealToOrder(meal);
@@ -60,7 +74,6 @@ class OrderTest {
         // given
         Meal meal1 = new Meal(24, "Chicken");
         Meal meal2 = new Meal(32, "Fish");
-        Order order = new Order();
 
         // when
         order.addMealToOrder(meal1);
@@ -69,8 +82,11 @@ class OrderTest {
         // then
         assertThat(order.getMeals(), contains(meal1, meal2));
         assertThat(order.getMeals(), containsInAnyOrder(meal2, meal1));
+        assertThat(order.getMeals().get(0), is(meal1));
+        assertThat(order.getMeals().get(1), is(meal2));
     }
 
+    @Disabled
     @Test
     void testIfTwoListsAreTheSame() {
         // given
@@ -84,5 +100,44 @@ class OrderTest {
 
         // then
         assertThat(meals1, is(meals2));
+    }
+
+    @Test
+    void orderTotalPriceShouldNotExceedsMaxIntValue() {
+        // given
+        Meal meal1 = new Meal(Integer.MAX_VALUE, "Chicken");
+        Meal meal2 = new Meal(Integer.MAX_VALUE, "Fish");
+
+        // when
+        order.addMealToOrder(meal1);
+        order.addMealToOrder(meal2);
+
+        // then
+        assertThrows(IllegalStateException.class, () -> order.totalPrice());
+    }
+
+    @Test
+    void emptyOrderTotalPriceShouldEqualZero() {
+        // given + when
+        // Order is created in BeforeEach
+
+        // then
+        assertThat(order.totalPrice(), is(0));
+    }
+
+    @Test
+    void cancelingOrderShouldRemoveAllItemsFromMealsList() {
+        // given
+        Meal meal1 = new Meal(24, "Chicken");
+        Meal meal2 = new Meal(32, "Fish");
+
+        // when
+        order.addMealToOrder(meal1);
+        order.addMealToOrder(meal2);
+        order.cancel();
+
+        // then
+        assertThat(order.getMeals(), is(empty()));
+        assertThat(order.getMeals().size(), is(0));
     }
 }
