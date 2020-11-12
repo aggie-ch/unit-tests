@@ -8,6 +8,7 @@ import java.util.List;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @ExtendWith(BeforeAfterExtension.class)
 class OrderTest {
@@ -81,6 +82,8 @@ class OrderTest {
         // then
         assertThat(order.getMeals(), contains(meal1, meal2));
         assertThat(order.getMeals(), containsInAnyOrder(meal2, meal1));
+        assertThat(order.getMeals().get(0), is(meal1));
+        assertThat(order.getMeals().get(1), is(meal2));
     }
 
     @Disabled
@@ -97,5 +100,44 @@ class OrderTest {
 
         // then
         assertThat(meals1, is(meals2));
+    }
+
+    @Test
+    void orderTotalPriceShouldNotExceedsMaxIntValue() {
+        // given
+        Meal meal1 = new Meal(Integer.MAX_VALUE, "Chicken");
+        Meal meal2 = new Meal(Integer.MAX_VALUE, "Fish");
+
+        // when
+        order.addMealToOrder(meal1);
+        order.addMealToOrder(meal2);
+
+        // then
+        assertThrows(IllegalStateException.class, () -> order.totalPrice());
+    }
+
+    @Test
+    void emptyOrderTotalPriceShouldEqualZero() {
+        // given + when
+        // Order is created in BeforeEach
+
+        // then
+        assertThat(order.totalPrice(), is(0));
+    }
+
+    @Test
+    void cancelingOrderShouldRemoveAllItemsFromMealsList() {
+        // given
+        Meal meal1 = new Meal(24, "Chicken");
+        Meal meal2 = new Meal(32, "Fish");
+
+        // when
+        order.addMealToOrder(meal1);
+        order.addMealToOrder(meal2);
+        order.cancel();
+
+        // then
+        assertThat(order.getMeals(), is(empty()));
+        assertThat(order.getMeals().size(), is(0));
     }
 }
