@@ -3,9 +3,10 @@ package io.github.aggie.testing;
 import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.api.Test;
 
-//import static org.hamcrest.MatcherAssert.assertThat;
-//import static org.hamcrest.Matchers.*;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.*;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.hamcrest.Matchers.is;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.api.Assumptions.assumingThat;
 
@@ -87,5 +88,17 @@ class AccountTest {
 
         //when + then
         assertThrows(IllegalArgumentException.class, () -> account.setEmail("incorrectEmail"));
+    }
+
+    @Test
+    void validEmailShouldBeSet() {
+        // given
+        Account account = new Account();
+
+        // when
+        account.setEmail("kate.zoe@gmail.com");
+
+        // then
+        assertThat(account.getEmail(), is("kate.zoe@gmail.com"));
     }
 }
