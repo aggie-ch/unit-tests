@@ -1,4 +1,4 @@
-package io.github.aggie.testing;
+package io.github.aggie.testing.account;
 
 public class Account {
     private boolean active;

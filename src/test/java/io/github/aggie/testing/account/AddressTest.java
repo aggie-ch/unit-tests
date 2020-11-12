@@ -1,4 +1,4 @@
-package io.github.aggie.testing;
+package io.github.aggie.testing.account;
 
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvFileSource;

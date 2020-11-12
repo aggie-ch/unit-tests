@@ -1,5 +1,6 @@
 package io.github.aggie.testing;
 
+import io.github.aggie.testing.order.Order;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

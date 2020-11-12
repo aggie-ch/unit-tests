@@ -1,4 +1,6 @@
-package io.github.aggie.testing;
+package io.github.aggie.testing.order;
+
+import io.github.aggie.testing.Meal;
 
 import java.util.ArrayList;
 import java.util.List;

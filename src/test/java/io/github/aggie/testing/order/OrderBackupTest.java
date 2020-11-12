@@ -1,5 +1,6 @@
-package io.github.aggie.testing;
+package io.github.aggie.testing.order;
 
+import io.github.aggie.testing.Meal;
 import org.junit.jupiter.api.*;
 
 import java.io.FileNotFoundException;
