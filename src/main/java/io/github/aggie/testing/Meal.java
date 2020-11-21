@@ -37,12 +37,16 @@ public class Meal {
         return this.price - discount;
     }
 
-    public int getQuantity() {
-        return quantity;
+    int sumPrice() {
+        return getPrice() * getQuantity();
     }
 
     public String getName() {
         return name;
+    }
+
+    public int getQuantity() {
+        return quantity;
     }
 
     @Override

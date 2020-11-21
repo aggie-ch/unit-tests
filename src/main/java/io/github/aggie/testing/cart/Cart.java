@@ -1,5 +1,6 @@
-package io.github.aggie.testing;
+package io.github.aggie.testing.cart;
 
+import io.github.aggie.testing.Meal;
 import io.github.aggie.testing.order.Order;
 
 import java.util.ArrayList;
@@ -23,7 +24,7 @@ public class Cart {
 
     void simulateLargeOrder() {
         for (int i = 0; i < 1000; i++) {
-            Meal meal = new Meal(i % 10, "Cheesburger no " + i);
+            Meal meal = new Meal(i % 10, "Cheeseburger no " + i);
             Order order = new Order();
             order.addMealToOrder(meal);
             addOrderToCart(order);

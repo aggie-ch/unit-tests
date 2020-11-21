@@ -1,5 +1,7 @@
-package io.github.aggie.testing;
+package io.github.aggie.testing.cart;
 
+import io.github.aggie.testing.Meal;
+import io.github.aggie.testing.cart.Cart;
 import io.github.aggie.testing.order.Order;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

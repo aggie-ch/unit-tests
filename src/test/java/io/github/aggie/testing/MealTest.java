@@ -2,16 +2,16 @@ package io.github.aggie.testing;
 
 import io.github.aggie.testing.extensions.IllegalArgumentExceptionIgnoreExtension;
 import io.github.aggie.testing.order.Order;
-import org.junit.jupiter.api.DynamicTest;
-import org.junit.jupiter.api.Tag;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestFactory;
+import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.api.function.Executable;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.junit.jupiter.params.provider.ValueSource;
+import org.mockito.Spy;
+import org.mockito.junit.jupiter.MockitoExtension;
+import org.mockito.junit.jupiter.MockitoSettings;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -23,8 +23,15 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.BDDMockito.given;
+import static org.mockito.BDDMockito.then;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.spy;
 
 class MealTest {
+
+    @Spy
+    private Meal mealSpy;
 
     @Test
     void shouldReturnDiscountedPrice() {
@@ -149,6 +156,57 @@ class MealTest {
         }
 
         return dynamicTests;
+    }
+
+    @Test
+    void testMealSumPrice() {
+        // given
+        Meal meal = mock(Meal.class);
+        given(meal.getPrice()).willReturn(15);
+        given(meal.getQuantity()).willReturn(3);
+        given(meal.sumPrice()).willCallRealMethod();
+
+        // when
+        int result = meal.sumPrice();
+
+        // then
+        assertThat(result).isEqualTo(45);
+    }
+
+    @Test
+    void testMealSumPriceWithSpy() {
+        // given
+//        Meal meal = spy(Meal.class);
+        // or
+        Meal meal = spy(new Meal(15, 3, "Kebab"));
+
+//        given(meal.getPrice()).willReturn(15);
+//        given(meal.getQuantity()).willReturn(3);
+
+        // when
+        int result = meal.sumPrice();
+
+        // then
+        then(meal).should().getPrice();
+        then(meal).should().getQuantity();
+        assertThat(result).isEqualTo(45);
+    }
+
+    @Disabled
+    @Test
+    @ExtendWith(MockitoExtension.class)
+    void testMealSumPriceWithSpyWithAnnotation() {
+        // given
+        given(mealSpy.getPrice()).willReturn(15);
+        given(mealSpy.getQuantity()).willReturn(3);
+
+        // when
+        int result = mealSpy.sumPrice();
+
+        // then
+        then(mealSpy).should().getPrice();
+        then(mealSpy).should().getQuantity();
+        assertThat(result).isEqualTo(45);
     }
 
     private int calculatePrice(int price, int quantity) {
