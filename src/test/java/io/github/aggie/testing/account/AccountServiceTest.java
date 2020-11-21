@@ -3,10 +3,12 @@ package io.github.aggie.testing.account;
 import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.contains;
 import static org.hamcrest.Matchers.hasSize;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.mock;
@@ -54,5 +56,19 @@ public class AccountServiceTest {
 
         // then
         assertThat(allActiveAccounts, hasSize(0));
+    }
+
+    @Test
+    void getAccountsByName() {
+        // given
+        AccountRepository accountRepository = mock(AccountRepository.class);
+        AccountService accountService = new AccountService(accountRepository);
+        given(accountRepository.getByName("Dave")).willReturn(Collections.singletonList("James"));
+
+        // when
+        List<String> accountNames = accountService.findByName("Dave");
+
+        // then
+        assertThat(accountNames, contains("James"));
     }
 }

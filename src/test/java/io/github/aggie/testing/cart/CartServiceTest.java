@@ -3,8 +3,11 @@ package io.github.aggie.testing.cart;
 import io.github.aggie.testing.order.Order;
 import io.github.aggie.testing.order.OrderStatus;
 import org.junit.jupiter.api.Test;
-import org.mockito.ArgumentCaptor;
-import org.mockito.InOrder;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.*;
+import org.mockito.junit.jupiter.MockitoExtension;
+import org.mockito.junit.jupiter.MockitoSettings;
+import org.mockito.quality.Strictness;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
@@ -13,7 +16,17 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.BDDMockito.*;
 
+//@MockitoSettings(strictness = Strictness.STRICT_STUBS)
+//@ExtendWith(MockitoExtension.class)
 class CartServiceTest {
+
+//    @InjectMocks
+//    private CartService cartService;
+//    @Mock
+//    private CartHandler cartHandler;
+//    @Captor
+//    ArgumentCaptor<Cart> argumentCaptor;
+
 
     @Test
     void processCartShouldSendToPrepare() {
