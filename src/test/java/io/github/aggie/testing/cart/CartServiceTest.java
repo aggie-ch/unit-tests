@@ -2,12 +2,11 @@ package io.github.aggie.testing.cart;
 
 import io.github.aggie.testing.order.Order;
 import io.github.aggie.testing.order.OrderStatus;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.*;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.mockito.junit.jupiter.MockitoSettings;
-import org.mockito.quality.Strictness;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
@@ -17,16 +16,14 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.BDDMockito.*;
 
 //@MockitoSettings(strictness = Strictness.STRICT_STUBS)
-//@ExtendWith(MockitoExtension.class)
 class CartServiceTest {
 
-//    @InjectMocks
-//    private CartService cartService;
-//    @Mock
-//    private CartHandler cartHandler;
-//    @Captor
-//    ArgumentCaptor<Cart> argumentCaptor;
-
+    @InjectMocks
+    private CartService cartService;
+    @Mock
+    private CartHandler cartHandler;
+    @Captor
+    ArgumentCaptor<Cart> argumentCaptor;
 
     @Test
     void processCartShouldSendToPrepare() {
@@ -167,6 +164,30 @@ class CartServiceTest {
 
         // then
 //        verify(cartHandler).sendToPrepare(argumentCaptor.capture());
+        then(cartHandler).should().sendToPrepare(argumentCaptor.capture());
+        assertThat(argumentCaptor.getValue().getOrders().size(), equalTo(1));
+    }
+
+    @Disabled
+    @Test
+    @ExtendWith(MockitoExtension.class)
+    void processCartShouldSendToPrepareWithArgumentCaptorAnnotation() {
+        // given
+        Order order = new Order();
+        Cart cart = new Cart();
+        cart.addOrderToCart(order);
+
+//        Annotations:
+//        CartHandler cartHandler = mock(CartHandler.class);
+//        CartService cartService = new CartService(cartHandler);
+//        ArgumentCaptor<Cart> argumentCaptor = ArgumentCaptor.forClass(Cart.class);
+
+        given(cartHandler.canHandleCart(cart)).willReturn(true);
+
+        // when
+        Cart resultCart = cartService.processCart(cart);
+
+        // then
         then(cartHandler).should().sendToPrepare(argumentCaptor.capture());
         assertThat(argumentCaptor.getValue().getOrders().size(), equalTo(1));
     }
