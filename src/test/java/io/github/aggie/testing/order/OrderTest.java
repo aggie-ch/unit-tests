@@ -1,8 +1,7 @@
 package io.github.aggie.testing.order;
 
-import io.github.aggie.testing.Meal;
+import io.github.aggie.testing.meal.Meal;
 import io.github.aggie.testing.extensions.BeforeAfterExtension;
-import io.github.aggie.testing.order.Order;
 import org.hamcrest.MatcherAssert;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.extension.ExtendWith;

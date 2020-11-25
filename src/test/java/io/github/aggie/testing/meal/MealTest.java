@@ -1,6 +1,7 @@
-package io.github.aggie.testing;
+package io.github.aggie.testing.meal;
 
 import io.github.aggie.testing.extensions.IllegalArgumentExceptionIgnoreExtension;
+import io.github.aggie.testing.meal.Meal;
 import io.github.aggie.testing.order.Order;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -11,7 +12,6 @@ import org.junit.jupiter.params.provider.MethodSource;
 import org.junit.jupiter.params.provider.ValueSource;
 import org.mockito.Spy;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.mockito.junit.jupiter.MockitoSettings;
 
 import java.util.ArrayList;
 import java.util.Arrays;

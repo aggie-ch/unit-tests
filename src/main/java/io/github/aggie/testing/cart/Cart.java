@@ -1,6 +1,6 @@
 package io.github.aggie.testing.cart;
 
-import io.github.aggie.testing.Meal;
+import io.github.aggie.testing.meal.Meal;
 import io.github.aggie.testing.order.Order;
 
 import java.util.ArrayList;
