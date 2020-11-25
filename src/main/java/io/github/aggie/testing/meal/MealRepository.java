@@ -32,9 +32,39 @@ public class MealRepository {
         }
     }
 
-    public List<Meal> findByPrice(int price) {
-        return meals.stream()
-                .filter(meal -> meal.getPrice() == price)
-                .collect(Collectors.toList());
+    public List<Meal> findByPriceWithInitialData(int price, SearchPrice searchPrice, List<Meal> initialData) {
+        List<Meal> result = new ArrayList<>();
+
+        switch (searchPrice) {
+            case LESS:
+                result = initialData.stream()
+                        .filter(meal -> meal.getPrice() < price)
+                        .collect(Collectors.toList());
+                break;
+
+            case EXACT:
+                result = initialData.stream()
+                        .filter(meal -> meal.getPrice() == price)
+                        .collect(Collectors.toList());
+                break;
+
+            case MORE:
+                result = initialData.stream()
+                        .filter(meal -> meal.getPrice() > price)
+                        .collect(Collectors.toList());
+                break;
+        }
+        return result;
+    }
+
+    public List<Meal> findByPrice(int price, SearchPrice searchPrice) {
+        return findByPriceWithInitialData(price, searchPrice, meals);
+    }
+
+    public List<Meal> find(String name, boolean exactName, int price, SearchPrice searchPrice) {
+        List<Meal> nameMatches = findByName(name, exactName);
+        List<Meal> result = findByPriceWithInitialData(price, searchPrice, nameMatches);
+
+        return result;
     }
 }
